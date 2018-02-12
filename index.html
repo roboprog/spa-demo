@@ -1,0 +1,167 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js">
+        </script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.22.1/ramda.min.js">
+        </script>
+        <script src="app.js" >
+        </script>
+    </head>
+    <body
+        ng-app="demo"
+        ng-controller="demoCtrl as raffle"
+    >
+        <!-- note: background colors are "a bit" exaggerated to differentiate sections -->
+        <style>
+            * {
+                color: darkslategray ;
+            }
+            div {
+                padding: 0.5em ;
+            }
+            fieldset {
+                border-radius: 0.5em ;
+                width: 25em ;
+            }
+            label {
+                width: 10em ;
+                float: left ;
+                text-align: right ;
+                margin-right: 0.5em ;
+            }
+            fieldset div {
+                padding: 0.15em ;
+            }
+            table {
+                width: 95% ;
+            }
+            tbody tr:nth-child(odd) {
+                background-color: #dfd ;
+            }
+            tbody tr:nth-child(even) {
+                background-color: #ffe ;
+            }
+            th,
+                    td {
+                width: 50% ;
+                text-align: center ;
+            }
+            div#hdr {
+                background-color: lightsalmon ;
+            }
+            div#msgs {
+                background-color: palegreen ;
+            }
+            div#results {
+                background-color: lightcyan ;
+            }
+            div#entry {
+                background-color: lightgoldenrodyellow ;
+            }
+            div#list {
+                background-color: thistle  ;
+            }
+            div#ftr {
+                background-color: lightgray ;
+            }
+            div#ftr p {
+                font-size: 0.5em ;
+            }
+        </style>
+        <div id="hdr">
+            <h1>Raffle Demo</h1>
+        </div>
+        <div id="msgs">
+            <ul>
+                <li
+                    ng-repeat="msg in raffle.mod.msgs"
+                >
+                    {{ msg }}
+                </li>
+            </ul>
+        </div>
+        <div id="results">
+            <fieldset>
+                <legend>Results</legend>
+                <input type="button" value="Draw"
+                   ng-click="raffle.ctl.run_raffle()"
+                />
+                <div></div>
+                <label>Winner:</label>
+                <span>{{ raffle.mod.winner.fname }} {{ raffle.mod.winner.lname }}</span>
+            </fieldset>
+        </div>
+        <div id="entry">
+            <fieldset>
+                <!-- using empty divs as spacers, as cannot assign size to br/ -->
+                <legend>Participant Entry</legend>
+                <label for="fname">First Name:</label>
+                <input id="fname" width="20"
+                   ng-model="raffle.mod.entry.fname"
+                >
+                <div></div>
+                <label for="lname">Last Name:</label>
+                <input id="lname" width="20"
+                   ng-model="raffle.mod.entry.lname"
+                >
+                <div></div>
+                <label for="tickets">Number of Tickets:</label>
+                <!--
+                    see
+                    https://www.undefinednull.com/2014/08/11/a-brief-walk-through-of-the-ng-options-in-angularjs/
+                    as the Angular documentation for ngOptions / ng-options is somewhat opaque.
+                -->
+                <select id="tickets"
+                    ng-model="raffle.mod.entry.tickets"
+                    ng-options="num for num in raffle.mod.ticket_opts"
+                > </select>
+                <div></div>
+                <input type="button" value="Delete"
+                   ng-click="raffle.ctl.del()"
+                />
+            </fieldset>
+        </div>
+        <div id="list">
+            <fieldset>
+                <legend>Participants</legend>
+                <table>
+                    <thead>
+                        <tr
+                            ng-show="raffle.mod.entrants.length"
+                        >
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Number of Tickets</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            ng-repeat="entrant in raffle.mod.entrants"
+                            ng-click="raffle.ctl.sel_row( $index )"
+                            ng-style="raffle.ctl.get_row_style( $index )"
+                        >
+                            <td>{{ entrant.fname }}</td>
+                            <td>{{ entrant.lname }}</td>
+                            <td>{{ entrant.tickets }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>
+                                <input type="button" value="Add"
+                                   ng-click="raffle.ctl.add()"
+                                />
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </fieldset>
+        </div>
+        <div id="ftr">
+            <p>
+                Copyright {{ raffle.mod.meta.cr_yr }}, {{ raffle.mod.meta.corp_alias }},
+                void where prohibited by law...
+            </p>
+        </div>
+    </body>
+</html>

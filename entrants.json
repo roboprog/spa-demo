@@ -1,0 +1,7 @@
+{
+  "entrants": [
+    { "fname": "Joe", "lname": "Blow", "tickets": 3 },
+    { "fname": "Susan", "lname": "Queue", "tickets": 2 },
+    { "fname": "Lucky", "lname": "Strikes", "tickets": 7 }
+  ]
+}
