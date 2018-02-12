@@ -7,3 +7,4 @@ Provide a stub of an SPA project
 ##Branches
 
 * INIT - initial state, as copied from donor repo.
+* BASIC - basic java based server, simply replacing python server (no dynamic data).
