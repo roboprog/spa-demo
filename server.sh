@@ -1,3 +1,3 @@
-#!/usr/bin/env python -m SimpleHTTPServer 9000
-#
-# Yeah, that's it.  Note that I am using Python 2.  Apparently this is different in 3.
+#!/bin/sh -x
+# start up project jar from project root directory
+java -jar target/spa-demo-1.0-SNAPSHOT-jar-with-dependencies.jar
